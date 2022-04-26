@@ -38,6 +38,7 @@ class _QuizPageState extends State<QuizPage> {
   int num = 0;
   int question = 1;
   int total = 0;
+  String check = "";
   Future<void> readJson() async {
     final String response =
         await rootBundle.loadString('assets/questions.json');
@@ -48,6 +49,31 @@ class _QuizPageState extends State<QuizPage> {
     setState(() {
       _items = data;
     });
+  }
+
+  Widget CheckOptions(List data) {
+    if (data.length > 2) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          textButton(
+              data: _items[num]["incorrect_answers"][1],
+              onPressed: () {
+                setState(() {
+                  check = "Sorry";
+                });
+              }),
+          textButton(
+              data: _items[num]["incorrect_answers"][2],
+              onPressed: () {
+                setState(() {
+                  check = "Sorry";
+                });
+              }),
+        ],
+      );
+    }
+    return Row();
   }
 
   @override
@@ -138,6 +164,7 @@ class _QuizPageState extends State<QuizPage> {
                 setState(() {
                   question++;
                   num++;
+                  check = "";
                 });
               },
             ),
@@ -155,20 +182,31 @@ class _QuizPageState extends State<QuizPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            textButton(data: _items[num]["correct_answer"], onPressed: () {}),
             textButton(
-                data: _items[num]["incorrect_answers"][0], onPressed: () {}),
+                data: _items[num]["correct_answer"],
+                onPressed: () {
+                  setState(() {
+                    check = "Correct";
+                  });
+                }),
+            textButton(
+                data: _items[num]["incorrect_answers"][0],
+                onPressed: () {
+                  setState(() {
+                    check = "Sorry";
+                  });
+                }),
           ],
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            textButton(
-                data: _items[num]["incorrect_answers"][1], onPressed: () {}),
-            textButton(
-                data: _items[num]["incorrect_answers"][2], onPressed: () {}),
-          ],
-        )
+        CheckOptions(_items[num]["incorrect_answers"]),
+        Text(
+          check,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 25.0,
+            color: Colors.black,
+          ),
+        ),
       ],
     );
   }
