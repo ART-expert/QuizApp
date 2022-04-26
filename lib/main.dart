@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
+import 'checkDifficulty.dart';
 
 void main() {
   runApp(const QuizApp());
@@ -35,59 +36,17 @@ class _QuizPageState extends State<QuizPage> {
   List _items = [];
   int num = 0;
   int question = 1;
+  int total = 0;
   Future<void> readJson() async {
     final String response =
         await rootBundle.loadString('assets/questions.json');
     final data = await json.decode(response);
+    total = data.length;
     //print(data);
+    // print(total);
     setState(() {
       _items = data;
     });
-  }
-
-  Widget checkDifficulty(String data) {
-    Widget star = Row(
-      children: [
-        Icon(Icons.star, color: Colors.grey),
-        Icon(Icons.star, color: Colors.grey),
-        Icon(Icons.star, color: Colors.grey),
-        Icon(Icons.star, color: Colors.grey),
-        Icon(Icons.star, color: Colors.grey)
-      ],
-    );
-    Icon(Icons.star, color: Colors.yellow);
-    if (data == "easy") {
-      star = Row(
-        children: [
-          Icon(Icons.star, color: Colors.black),
-          Icon(Icons.star, color: Colors.grey),
-          Icon(Icons.star, color: Colors.grey),
-          Icon(Icons.star, color: Colors.grey),
-          Icon(Icons.star, color: Colors.grey)
-        ],
-      );
-    } else if (data == "medium") {
-      star = Row(
-        children: [
-          Icon(Icons.star, color: Colors.black),
-          Icon(Icons.star, color: Colors.black),
-          Icon(Icons.star, color: Colors.grey),
-          Icon(Icons.star, color: Colors.grey),
-          Icon(Icons.star, color: Colors.grey)
-        ],
-      );
-    } else if (data == "hard") {
-      star = Row(
-        children: [
-          Icon(Icons.star, color: Colors.black),
-          Icon(Icons.star, color: Colors.black),
-          Icon(Icons.star, color: Colors.black),
-          Icon(Icons.star, color: Colors.grey),
-          Icon(Icons.star, color: Colors.grey)
-        ],
-      );
-    }
-    return star;
   }
 
   @override
@@ -100,11 +59,17 @@ class _QuizPageState extends State<QuizPage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        LinearProgressIndicator(
+          value: question / total,
+          backgroundColor: Colors.white,
+          color: Colors.grey,
+          minHeight: 10,
+        ),
         Padding(
           padding: EdgeInsets.all(10.0),
           child: Center(
             child: Text(
-              "Question No. $question",
+              "Question No. $question of $total",
               textAlign: TextAlign.start,
               style: TextStyle(
                 fontSize: 25.0,
@@ -130,6 +95,7 @@ class _QuizPageState extends State<QuizPage> {
           padding: EdgeInsets.all(10.0),
           child: Center(
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [checkDifficulty(_items[num]["difficulty"])],
             ),
           ),
@@ -195,7 +161,7 @@ class _QuizPageState extends State<QuizPage> {
               child: Text(
                 _items[num]["correct_answer"],
                 style: TextStyle(
-                  fontSize: 20.0,
+                  fontSize: 15.0,
                   color: Colors.black,
                 ),
               ),
@@ -208,7 +174,7 @@ class _QuizPageState extends State<QuizPage> {
               child: Text(
                 _items[num]["incorrect_answers"][0],
                 style: TextStyle(
-                  fontSize: 20.0,
+                  fontSize: 15.0,
                   color: Colors.black,
                 ),
               ),
@@ -226,7 +192,7 @@ class _QuizPageState extends State<QuizPage> {
               child: Text(
                 _items[num]["incorrect_answers"][1],
                 style: TextStyle(
-                  fontSize: 20.0,
+                  fontSize: 15.0,
                   color: Colors.black,
                 ),
               ),
@@ -239,7 +205,7 @@ class _QuizPageState extends State<QuizPage> {
               child: Text(
                 _items[num]["incorrect_answers"][2],
                 style: TextStyle(
-                  fontSize: 20.0,
+                  fontSize: 15.0,
                   color: Colors.black,
                 ),
               ),
