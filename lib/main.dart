@@ -125,6 +125,22 @@ class _QuizPageState extends State<QuizPage> {
             )),
           ),
         ),
+        Expanded(
+          flex: 5,
+          child: Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Center(
+              child: Text(
+                _items[num]["question"],
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 25.0,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }
