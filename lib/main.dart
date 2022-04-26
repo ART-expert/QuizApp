@@ -141,6 +141,86 @@ class _QuizPageState extends State<QuizPage> {
             ),
           ),
         ),
+        Expanded(
+          flex: 5,
+          child: Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Center(
+              child: Buttons(),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Column Buttons() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.grey,
+              ),
+              child: Text(
+                _items[num]["correct_answer"],
+                style: TextStyle(
+                  fontSize: 20.0,
+                  color: Colors.black,
+                ),
+              ),
+              onPressed: () {},
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.grey,
+              ),
+              child: Text(
+                _items[num]["incorrect_answers"][0],
+                style: TextStyle(
+                  fontSize: 20.0,
+                  color: Colors.black,
+                ),
+              ),
+              onPressed: () {},
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.grey,
+              ),
+              child: Text(
+                _items[num]["incorrect_answers"][1],
+                style: TextStyle(
+                  fontSize: 20.0,
+                  color: Colors.black,
+                ),
+              ),
+              onPressed: () {},
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.grey,
+              ),
+              child: Text(
+                _items[num]["incorrect_answers"][2],
+                style: TextStyle(
+                  fontSize: 20.0,
+                  color: Colors.black,
+                ),
+              ),
+              onPressed: () {},
+            ),
+          ],
+        )
       ],
     );
   }
