@@ -34,6 +34,7 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   List _items = [];
   int num = 0;
+  int question = 1;
   Future<void> readJson() async {
     final String response =
         await rootBundle.loadString('assets/questions.json');
@@ -99,54 +100,79 @@ class _QuizPageState extends State<QuizPage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Expanded(
-          flex: 5,
-          child: Padding(
-            padding: EdgeInsets.all(10.0),
-            child: Center(
-              child: Text(
-                _items[num]["category"],
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 25.0,
-                  color: Colors.black,
-                ),
+        Padding(
+          padding: EdgeInsets.all(10.0),
+          child: Center(
+            child: Text(
+              "Question No. $question",
+              textAlign: TextAlign.start,
+              style: TextStyle(
+                fontSize: 25.0,
+                color: Colors.black,
               ),
             ),
           ),
         ),
-        Expanded(
-          flex: 5,
-          child: Padding(
-            padding: EdgeInsets.all(10.0),
-            child: Center(
-                child: Row(
+        Padding(
+          padding: EdgeInsets.all(10.0),
+          child: Center(
+            child: Text(
+              _items[num]["category"],
+              textAlign: TextAlign.start,
+              style: TextStyle(
+                fontSize: 15.0,
+                color: Colors.grey,
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.all(10.0),
+          child: Center(
+            child: Row(
               children: [checkDifficulty(_items[num]["difficulty"])],
-            )),
+            ),
           ),
         ),
-        Expanded(
-          flex: 5,
-          child: Padding(
-            padding: EdgeInsets.all(10.0),
-            child: Center(
-              child: Text(
-                _items[num]["question"],
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 25.0,
-                  color: Colors.black,
-                ),
+        Padding(
+          padding: EdgeInsets.all(20.0),
+          child: Center(
+            child: Text(
+              _items[num]["question"],
+              textAlign: TextAlign.start,
+              style: TextStyle(
+                fontSize: 25.0,
+                color: Colors.black,
               ),
             ),
           ),
         ),
-        Expanded(
-          flex: 5,
-          child: Padding(
-            padding: EdgeInsets.all(10.0),
-            child: Center(
-              child: Buttons(),
+        Padding(
+          padding: EdgeInsets.all(5.0),
+          child: Center(
+            child: Buttons(),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.all(20.0),
+          child: Center(
+            child: TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.grey,
+              ),
+              child: Text(
+                "Next Question",
+                style: TextStyle(
+                  fontSize: 20.0,
+                  color: Colors.black,
+                ),
+              ),
+              onPressed: () {
+                setState(() {
+                  question++;
+                  num++;
+                });
+              },
             ),
           ),
         ),
