@@ -115,6 +115,16 @@ class _QuizPageState extends State<QuizPage> {
             ),
           ),
         ),
+        Expanded(
+          flex: 5,
+          child: Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Center(
+                child: Row(
+              children: [checkDifficulty(_items[num]["difficulty"])],
+            )),
+          ),
+        ),
       ],
     );
   }
