@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
 import 'checkDifficulty.dart';
+import 'text_button.dart';
 
 void main() {
   runApp(const QuizApp());
@@ -154,63 +155,18 @@ class _QuizPageState extends State<QuizPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.grey,
-              ),
-              child: Text(
-                _items[num]["correct_answer"],
-                style: TextStyle(
-                  fontSize: 15.0,
-                  color: Colors.black,
-                ),
-              ),
-              onPressed: () {},
-            ),
-            TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.grey,
-              ),
-              child: Text(
-                _items[num]["incorrect_answers"][0],
-                style: TextStyle(
-                  fontSize: 15.0,
-                  color: Colors.black,
-                ),
-              ),
-              onPressed: () {},
-            ),
+            textButton(data: _items[num]["correct_answer"], onPressed: () {}),
+            textButton(
+                data: _items[num]["incorrect_answers"][0], onPressed: () {}),
           ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.grey,
-              ),
-              child: Text(
-                _items[num]["incorrect_answers"][1],
-                style: TextStyle(
-                  fontSize: 15.0,
-                  color: Colors.black,
-                ),
-              ),
-              onPressed: () {},
-            ),
-            TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.grey,
-              ),
-              child: Text(
-                _items[num]["incorrect_answers"][2],
-                style: TextStyle(
-                  fontSize: 15.0,
-                  color: Colors.black,
-                ),
-              ),
-              onPressed: () {},
-            ),
+            textButton(
+                data: _items[num]["incorrect_answers"][1], onPressed: () {}),
+            textButton(
+                data: _items[num]["incorrect_answers"][2], onPressed: () {}),
           ],
         )
       ],
