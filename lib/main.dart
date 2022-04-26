@@ -1,67 +1,121 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'dart:convert';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const QuizApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class QuizApp extends StatelessWidget {
+  const QuizApp({Key? key}) : super(key: key);
 
-  @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+      home: Scaffold(
+        backgroundColor: Colors.white,
+        body: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            child: QuizPage(),
+          ),
+        ),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+class QuizPage extends StatefulWidget {
+  const QuizPage({Key? key}) : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  _QuizPageState createState() => _QuizPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
+class _QuizPageState extends State<QuizPage> {
+  List _items = [];
+  int num = 0;
+  Future<void> readJson() async {
+    final String response =
+        await rootBundle.loadString('assets/questions.json');
+    final data = await json.decode(response);
+    //print(data);
     setState(() {
-      _counter++;
+      _items = data;
     });
+  }
+
+  Widget checkDifficulty(String data) {
+    Widget star = Row(
+      children: [
+        Icon(Icons.star, color: Colors.grey),
+        Icon(Icons.star, color: Colors.grey),
+        Icon(Icons.star, color: Colors.grey),
+        Icon(Icons.star, color: Colors.grey),
+        Icon(Icons.star, color: Colors.grey)
+      ],
+    );
+    Icon(Icons.star, color: Colors.yellow);
+    if (data == "easy") {
+      star = Row(
+        children: [
+          Icon(Icons.star, color: Colors.black),
+          Icon(Icons.star, color: Colors.grey),
+          Icon(Icons.star, color: Colors.grey),
+          Icon(Icons.star, color: Colors.grey),
+          Icon(Icons.star, color: Colors.grey)
+        ],
+      );
+    } else if (data == "medium") {
+      star = Row(
+        children: [
+          Icon(Icons.star, color: Colors.black),
+          Icon(Icons.star, color: Colors.black),
+          Icon(Icons.star, color: Colors.grey),
+          Icon(Icons.star, color: Colors.grey),
+          Icon(Icons.star, color: Colors.grey)
+        ],
+      );
+    } else if (data == "hard") {
+      star = Row(
+        children: [
+          Icon(Icons.star, color: Colors.black),
+          Icon(Icons.star, color: Colors.black),
+          Icon(Icons.star, color: Colors.black),
+          Icon(Icons.star, color: Colors.grey),
+          Icon(Icons.star, color: Colors.grey)
+        ],
+      );
+    }
+    return star;
+  }
+
+  @override
+  void initState() {
+    readJson();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+    return Column(
+      children: [
+        Expanded(
+          flex: 5,
+          child: Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Center(
+              child: Text(
+                _items[num]["category"],
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 25.0,
+                  color: Colors.black,
+                ),
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+      ],
     );
   }
 }
