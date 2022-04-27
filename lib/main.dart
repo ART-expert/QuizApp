@@ -39,6 +39,10 @@ class _QuizPageState extends State<QuizPage> {
   int question = 1;
   int total = 0;
   String check = "";
+  int correct = 0;
+  double score = 0;
+  double mscore = 0;
+
   Future<void> readJson() async {
     final String response =
         await rootBundle.loadString('assets/questions.json');
@@ -165,11 +169,44 @@ class _QuizPageState extends State<QuizPage> {
                   question++;
                   num++;
                   check = "";
+                  score = correct / question;
+                  mscore = (correct + (total - question)) / total;
                 });
               },
             ),
           ),
         ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("Score: $score%"),
+            Text("Max Score: $mscore%"),
+          ],
+        ),
+        Center(
+          child: Stack(
+            children: <Widget>[
+              LinearProgressIndicator(
+                value: (correct + (total - question)) / total,
+                backgroundColor: Colors.white.withOpacity(0.0),
+                color: Colors.black12,
+                minHeight: 20,
+              ), //Container
+              LinearProgressIndicator(
+                value: correct / question,
+                backgroundColor: Colors.white.withOpacity(0.0),
+                color: Colors.black54,
+                minHeight: 20,
+              ), //Container
+              LinearProgressIndicator(
+                value: correct / total,
+                backgroundColor: Colors.white.withOpacity(0.0),
+                color: Colors.black,
+                minHeight: 20,
+              ), //Container
+            ], //<Widget>[]
+          ), //Stack
+        )
       ],
     );
   }
@@ -187,6 +224,8 @@ class _QuizPageState extends State<QuizPage> {
                 onPressed: () {
                   setState(() {
                     check = "Correct";
+
+                    correct++;
                   });
                 }),
             textButton(
