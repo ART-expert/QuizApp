@@ -65,6 +65,10 @@ class _QuizPageState extends State<QuizPage> {
               onPressed: () {
                 setState(() {
                   check = "Sorry";
+                  score = (correct / question) * 100;
+                  mscore = ((correct + (total - question)) / total) * 100;
+                  score.roundToDouble();
+                  mscore.roundToDouble();
                 });
               }),
           textButton(
@@ -72,6 +76,10 @@ class _QuizPageState extends State<QuizPage> {
               onPressed: () {
                 setState(() {
                   check = "Sorry";
+                  score = (correct / question) * 100;
+                  mscore = ((correct + (total - question)) / total) * 100;
+                  score.roundToDouble();
+                  mscore.roundToDouble();
                 });
               }),
         ],
@@ -169,8 +177,6 @@ class _QuizPageState extends State<QuizPage> {
                   question++;
                   num++;
                   check = "";
-                  score = correct / question;
-                  mscore = (correct + (total - question)) / total;
                 });
               },
             ),
@@ -224,6 +230,10 @@ class _QuizPageState extends State<QuizPage> {
                 onPressed: () {
                   setState(() {
                     check = "Correct";
+                    score = (correct / question) * 100;
+                    mscore = ((correct + (total - question)) / total) * 100;
+                    score.roundToDouble();
+                    mscore.roundToDouble();
 
                     correct++;
                   });
@@ -233,6 +243,10 @@ class _QuizPageState extends State<QuizPage> {
                 onPressed: () {
                   setState(() {
                     check = "Sorry";
+                    score = (correct / question) * 100;
+                    mscore = ((correct + (total - question)) / total) * 100;
+                    score.roundToDouble();
+                    mscore.roundToDouble();
                   });
                 }),
           ],
