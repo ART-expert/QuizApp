@@ -181,6 +181,9 @@ class _QuizPageState extends State<QuizPage> {
                   if (question == 20 || num == 19) {
                     question = 0;
                     num = -1;
+                    score = 0;
+                    mscore = 0;
+                    correct = 0;
                   }
                   question++;
                   num++;
