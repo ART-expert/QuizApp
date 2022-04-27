@@ -64,22 +64,26 @@ class _QuizPageState extends State<QuizPage> {
               data: _items[num]["incorrect_answers"][1],
               onPressed: () {
                 setState(() {
+                  correct = correct;
                   check = "Sorry";
-                  score = (correct / question) * 100;
-                  mscore = ((correct + (total - question)) / total) * 100;
-                  score.roundToDouble();
-                  mscore.roundToDouble();
+                  score = double.parse(
+                      ((correct / question) * 100).toStringAsFixed(0));
+                  mscore = double.parse(
+                      (((correct + (total - question)) / total) * 100)
+                          .toStringAsFixed(0));
                 });
               }),
           textButton(
               data: _items[num]["incorrect_answers"][2],
               onPressed: () {
                 setState(() {
+                  correct = correct;
                   check = "Sorry";
-                  score = (correct / question) * 100;
-                  mscore = ((correct + (total - question)) / total) * 100;
-                  score.roundToDouble();
-                  mscore.roundToDouble();
+                  score = double.parse(
+                      ((correct / question) * 100).toStringAsFixed(0));
+                  mscore = double.parse(
+                      (((correct + (total - question)) / total) * 100)
+                          .toStringAsFixed(0));
                 });
               }),
         ],
@@ -174,6 +178,10 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 setState(() {
+                  if (question == 20 || num == 19) {
+                    question = 0;
+                    num = -1;
+                  }
                   question++;
                   num++;
                   check = "";
@@ -230,23 +238,25 @@ class _QuizPageState extends State<QuizPage> {
                 onPressed: () {
                   setState(() {
                     check = "Correct";
-                    score = (correct / question) * 100;
-                    mscore = ((correct + (total - question)) / total) * 100;
-                    score.roundToDouble();
-                    mscore.roundToDouble();
-
                     correct++;
+                    score = double.parse(
+                        ((correct / question) * 100).toStringAsFixed(0));
+                    mscore = double.parse(
+                        (((correct + (total - question)) / total) * 100)
+                            .toStringAsFixed(0));
                   });
                 }),
             textButton(
                 data: _items[num]["incorrect_answers"][0],
                 onPressed: () {
                   setState(() {
+                    correct = correct;
                     check = "Sorry";
-                    score = (correct / question) * 100;
-                    mscore = ((correct + (total - question)) / total) * 100;
-                    score.roundToDouble();
-                    mscore.roundToDouble();
+                    score = double.parse(
+                        ((correct / question) * 100).toStringAsFixed(0));
+                    mscore = double.parse(
+                        (((correct + (total - question)) / total) * 100)
+                            .toStringAsFixed(0));
                   });
                 }),
           ],
